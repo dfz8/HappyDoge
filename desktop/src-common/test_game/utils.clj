@@ -11,7 +11,7 @@
 (def ^:const max-velocity 200)
 (def ^:const acceleration 85)
 (def ^:const gravity 15)
-(def ^:const obstacle-velocity 50)
+(def ^:const obstacle-velocity 60)
 
 
 (defn ^:private get-player-velocity
@@ -21,7 +21,7 @@
      (key-pressed? :space)
      (min max-velocity (+ y-velocity acceleration))
      :else 
-     (max (* -1 max-velocity) (- y-velocity gravity))
+     (max (* -1.5 max-velocity) (- y-velocity gravity))
      )
    ])
 

@@ -7,15 +7,28 @@
 
 (defn create-pipe
   [img]
-  (assoc img
+  (let [gap-height  (+ (/ u/game_height 4) (rand-int (/ u/game_height 2)))]
+    [(assoc img
     :width 100
-    :height 600
+    :height u/game_height
     :x-velocity -50
     :y-velocity 0
     :x u/game_width
-    :y (+ (/ u/game_height 4) (rand-int (/ u/game_height 2)))
+    :y (+ gap-height 100)
     :obstacle? true
-    ))
+    )
+    (assoc img
+    :width 100
+    :height u/game_height
+    :x-velocity -50
+    :y-velocity 0
+    :x u/game_width
+    :y (- gap-height 100 u/game_height)
+    :obstacle? true
+    )
+     ]
+    )
+)
 
 (defn create-player
   [img]
@@ -37,8 +50,8 @@
         y-change (* y-velocity delta-time)]
     (if (or (not= 0 x-change) (not= 0 y-change))
       (assoc entity
-             :x-velocity x-velocity ;(u/decelerate x-velocity)
-             :y-velocity y-velocity ;(u/decelerate y-velocity)
+             :x-velocity x-velocity 
+             :y-velocity y-velocity 
              :x-change x-change
              :y-change y-change
              :x (+ x x-change)

@@ -28,7 +28,7 @@
   (fn [screen entities]
     (case (:id screen)
       :spawn-pipe
-      (conj entities (e/create-pipe (texture "pipe.png")))
+      (apply conj entities (e/create-pipe (texture "pipe.png")))
       entities))  
   :on-render
   (fn [screen entities]
