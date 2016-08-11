@@ -9,11 +9,11 @@
   [img]
   (assoc img
     :width 100
-    :height 100
+    :height 600
     :x-velocity -50
     :y-velocity 0
-    :x 400
-    :y 200
+    :x u/game_width
+    :y (+ (/ u/game_height 4) (rand-int (/ u/game_height 2)))
     :obstacle? true
     ))
 
@@ -24,8 +24,8 @@
     :height 100
     :x-velocity 0
     :y-velocity 0
-    :x 200
-    :y 300
+    :x (- (/ u/game_width 2) 50)
+    :y (+ (/ u/game_height 2) 50)
     :player? true))
 
 

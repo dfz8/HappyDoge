@@ -1,33 +1,33 @@
 (ns test-game.utils
   (:require [play-clj.core :refer :all]
-            [play-clj.g2d :refer :all]
-            [play-clj.math :refer :all]))
+           )
+  )
 
 
+(def ^:const game_width 800)
+(def ^:const game_height 600)
+(def ^:const frame-height 100)
 
-(def ^:const max-velocity 50)
+(def ^:const max-velocity 200)
+(def ^:const acceleration 85)
+(def ^:const gravity 15)
+(def ^:const obstacle-velocity 50)
 
 
 (defn ^:private get-player-velocity
   [{:keys [x-velocity y-velocity]}]
-  [(cond
-     (key-pressed? :dpad-left)
-     (* -1 max-velocity)
-     (key-pressed? :dpad-right)
-     max-velocity
-     :else
-     x-velocity)
-   (cond
-     (key-pressed? :dpad-down)
-     (* -1 max-velocity)
-     (key-pressed? :dpad-up)
-     max-velocity
-     :else
-     y-velocity)])
+  [ 0
+   (cond 
+     (key-pressed? :space)
+     (min max-velocity (+ y-velocity acceleration))
+     :else 
+     (max (* -1 max-velocity) (- y-velocity gravity))
+     )
+   ])
 
 (defn ^:private get-obstacle-velocity
   [{:keys [x-velocity y-velocity]}]
-  [x-velocity y-velocity]
+  [(* -1 obstacle-velocity) 0]
   )
 
 (defn get-velocity

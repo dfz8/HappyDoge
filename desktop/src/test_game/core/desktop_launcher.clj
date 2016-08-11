@@ -6,5 +6,5 @@
 
 (defn -main
   []
-  (LwjglApplication. test-game-game "test-game" WIDTH HEIGHT)
+  (LwjglApplication. test-game-game "test-game" 800 600)
   (Keyboard/enableRepeatEvents true))
