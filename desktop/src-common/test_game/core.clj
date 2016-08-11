@@ -18,10 +18,8 @@
     (let [screen (update! screen 
                           :camera (orthographic)
                           :renderer (stage) )
-          player-image (texture "doge.png")
-          pipe-image (texture "pipe.png")]
-      
-      (add-timer! screen :spawn-pipe 0 5 29)
+          player-image (texture "doge.png")]      
+      (add-timer! screen :spawn-pipe 0 5)
       [(e/create-player player-image)]      
       ))  
   :on-timer
@@ -37,15 +35,14 @@
          (map (fn [entity]
                 (->> entity
                      (e/move screen entities)
+                     (e/prevent-move entities)
                      )))
          (render-if-necessary! screen)
          ))
   :on-resize
   (fn [screen entities]
-    (height! screen u/game_height))  
+    (height! screen u/game-height))  
   )
-
-
 
 (defscreen text-screen
   :on-show
@@ -63,7 +60,7 @@
          (render! screen)))
   :on-resize
   (fn [screen entities]
-    (height! screen u/game_height))
+    (height! screen u/game-height))
   )
 
 (defgame test-game-game

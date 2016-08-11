@@ -7,28 +7,27 @@
 
 (defn create-pipe
   [img]
-  (let [gap-height  (+ (/ u/game_height 4) (rand-int (/ u/game_height 2)))]
+  (let [gap-height  (+ (/ u/game-height 4) (rand-int (/ u/game-height 2)))]
     [(assoc img
     :width 100
-    :height u/game_height
+    :height u/game-height
     :x-velocity -50
     :y-velocity 0
-    :x u/game_width
+    :x u/game-width
     :y (+ gap-height 100)
+    :passed? false
     :obstacle? true
     )
     (assoc img
     :width 100
-    :height u/game_height
+    :height u/game-height
     :x-velocity -50
     :y-velocity 0
-    :x u/game_width
-    :y (- gap-height 100 u/game_height)
+    :x u/game-width
+    :y (- gap-height 100 u/game-height)
+    :passed? false
     :obstacle? true
-    )
-     ]
-    )
-)
+    )]))
 
 (defn create-player
   [img]
@@ -37,8 +36,9 @@
     :height 100
     :x-velocity 0
     :y-velocity 0
-    :x (- (/ u/game_width 2) 50)
-    :y (+ (/ u/game_height 2) 50)
+    :x (- (/ u/game-width 2) 50)
+    :y (+ (/ u/game-height 2) 50)
+    :score 0
     :player? true))
 
 
@@ -57,3 +57,18 @@
              :x (+ x x-change)
              :y (+ y y-change))
       entity)))
+
+(defn prevent-move
+  [entities {:keys [x y x-change y-change height player?] :as entity}]
+  (if (and player? 
+           (or (< y 0) ;floor bound for now...should = loss in the future
+               (> y (- u/game-height height)) ;ceiling bound
+               ))
+    (assoc entity
+           :x-velocity 0
+           :y-velocity 0
+           :x-change 0
+           :y-change 0
+           :x (- x x-change)
+           :y (- y y-change))
+    entity))

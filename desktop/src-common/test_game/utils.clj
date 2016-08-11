@@ -4,9 +4,10 @@
   )
 
 
-(def ^:const game_width 800)
-(def ^:const game_height 600)
+(def ^:const game-width 800)
+(def ^:const game-height 600)
 (def ^:const frame-height 100)
+(def ^:const collistion-dist 5)
 
 (def ^:const max-velocity 200)
 (def ^:const acceleration 85)
@@ -36,3 +37,27 @@
     player? (get-player-velocity entity)
     obstacle? (get-obstacle-velocity entity)
     :else [0 0]))
+
+
+(defn on-top?
+  [player pipe]
+  (and (<= (:x pipe) (+ (:width player) (:x player))) (>= (+ (:x pipe) (:width pipe)) (:x player))))
+
+(defn pass-through?
+  [player pipe-low pipe-high]
+  (and (< (+ (:height player) (:y player)) (:y pipe-high))
+       (> (:y player) (+ (:height pipe-low) (:y pipe-low)))
+       )
+  )
+
+(defn near-entity?
+  [{:keys [x y id] :as e} e2]
+    (and (not= id (:id e2))
+         )
+  
+  )
+
+(defn near-entities?
+  [entity entities]
+  (some #(near-entity? entity %) entities)
+  )
