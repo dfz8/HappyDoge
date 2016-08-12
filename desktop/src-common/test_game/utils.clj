@@ -39,17 +39,6 @@
     :else [0 0]))
 
 
-(defn on-top?
-  [player pipe]
-  (and (<= (:x pipe) (+ (:width player) (:x player))) (>= (+ (:x pipe) (:width pipe)) (:x player))))
-
-(defn pass-through?
-  [player pipe-low pipe-high]
-  (and (< (+ (:height player) (:y player)) (:y pipe-high))
-       (> (:y player) (+ (:height pipe-low) (:y pipe-low)))
-       )
-  )
-
 (defn near-entity?
   [{:keys [x y width height id] :as e} e2]
     (if (and (not= id (:id e2))
