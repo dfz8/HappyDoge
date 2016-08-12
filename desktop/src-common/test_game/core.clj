@@ -19,7 +19,7 @@
                           :camera (orthographic)
                           :renderer (stage) )
           player-image (texture "doge.png")]      
-      (add-timer! screen :spawn-pipe 0 5)
+      (add-timer! screen :spawn-pipe 0 5 0)
       [(e/create-player player-image)]      
       ))  
   :on-timer
@@ -31,11 +31,14 @@
   :on-render
   (fn [screen entities]
     (clear!)
+    (let [me (find-first :player? entities)]
+      (u/near-entities? me entities))
     (->> entities 
          (map (fn [entity]
                 (->> entity
                      (e/move screen entities)
                      (e/prevent-move entities)
+                     
                      )))
          (render-if-necessary! screen)
          ))

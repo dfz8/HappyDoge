@@ -51,10 +51,17 @@
   )
 
 (defn near-entity?
-  [{:keys [x y id] :as e} e2]
-    (and (not= id (:id e2))
+  [{:keys [x y width height id] :as e} e2]
+    (if (and (not= id (:id e2))
+             (not (or 
+                    (< (+ x width) (:x e2))
+                    (> x (+ (:x e2) (:width e2)))
+                    (< (+ y height) (:y e2))
+                    (> y (+ (:y e2) (:height e2)))
+                    ))
          )
-  
+      (println "overlap")
+      )  
   )
 
 (defn near-entities?
